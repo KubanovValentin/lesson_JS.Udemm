@@ -1,85 +1,88 @@
-" use strict ";
-// разберем методы и свойства строк и чисел 
-// методы это вспомогательные функции а свойства это вспомогательные значения 
-const str = 'test';
+/* Задание на урок:
 
-console.log(str.length);
-// результат будет 4 это кличество букв 
-// и это часто используемо длины строки так и других типов данных
+1) Первую часть задания повторить по уроку
 
-const arr = [1, 2, 4];
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
 
-// console.log(arr.length);
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
 
-// результат -3 количество элементов внутри  массива 
-// прошу обратить внимание когда мы используем свойство length не вызывая его то мы пишем как выше через точку 
+P.S. Функции вызывать не обязательно*/
 
+'use strict';
 
-// в консоле f12 в console ddjlbv console.dir(numer); 
-// и видим как они выглядят внутрибраузера и их свойства
+// Код возьмите из предыдущего домашнего задания
 
 
-// console.log(arr[2]);
-// применили индекс 2 
-// результат 4 мы увидели значение 
+let numberOfFilms;
+//  функция start 
+function start() {
+    numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+    }
+}
+
+start();
+
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genres: [],
+    privat: false
+};
 
 
-// используем метод ,и нада использовать () 
-// мы выполняем действие над строкой 
+function rememberMyFilms() {
+    for (let i = 0; i < 2; i++) {
+        const a = prompt('Один из последних просмотренных фильмов?', ''),
+            b = prompt('На сколько оцените его?', '');
+        if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+            personalMovieDB.movies[a] = b;
+            console.log('done');
+        } else {
+            console.log('error');
+            i--;
+        }
+    }
+}
 
-// ------------
-// метод toLowerCase и toLowerCase 
-console.log(str.toUpperCase());
-// console.log(str.toLowerCase());
-// если вдруг затисалась заглавная или капс буква то этот метод возращат в нижний регистр а исходник не изменяеться
-console.log(str);
-
-// дальше метод который позволяет найти кусочек вашей строки и сказать с какой позиции она начинаеться
-
-const fruit = 'Some frut';
-// используем метод() должны быть 
-// -------------
-// метод indexOf 
-console.log(fruit.indexOf("frut"));
-// используеться восновном для того что бы определить есть ли кусочек кода в этой строке(искомое значение)
-// если написать какую нибудь букву которой нет в данном коде то покажет -1 что значит что этого элемента нет 
-// аналок условия потому что можем узнать есть ли такой кусочек строки или кода 
-
-const logg = 'hello word';
-// с помощью метода slice мы можем вырезать кусок  кода первая цифра начало а вторая конец 
-// -----------------
-// метод slice 
-console.log(logg.slice(6, 10));
-
-// можем использовать только первое значение (logg.slice(6)) и это означает что вырезаться будет до конца 
-// можно использовать и -1 значения тогда будет отсчет с конца 
-console.log(logg);
-
-console.log(logg.slice(6, 10));
+rememberMyFilms();
 
 
-// ---------
-// метод substring
-// это аналог slice только не использует -1 отр значение 
-console.log(logg.substring(6, 10));
-// ------------
-// команда substr
+function detectPersonalLevel() {
+    if (personalMovieDB.count < 10) {
+        console.log("Просмотрено довольно мало фильмов");
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+        console.log("Вы классический зритель");
+    } else if (personalMovieDB.count >= 30) {
+        console.log("Вы киноман");
+    } else {
+        console.log("Произошла ошибка");
+    }
+}
+detectPersonalLevel();
 
-// сдесь принцип первое число это 6(начало позиции) а второе число сколько символов надо вырезать (4) 
-console.log(logg.substr(6, 4));
+function showMyDB(hidden) {
+    // если ваша база данных не скрыта то мы ее показываем 
+    if (!hidden) {
+        console.log(personalMovieDB);
+    }
+}
+showMyDB(personalMovieDB.privat);
 
-// ---------------------------------- числа 
-// библиотека работы с числами - Math   в консоле можно увидеть пример
 
-const num = 12.2;
-// округление числа  редко придеться кроме откругления 
-console.log(Math.round(num));
+function writeYourGenres() {
+    for (let i = 1; i <= 3; i++) {
+        // const genre = prompt(`Ваш любимый жанр под номером ${i}`);
+        // personalMovieDB.genres[i - 1] = genre;
+        personalMovieDB.genres[i - 1] = prompt(`Ваш любимый жанр под номером ${i}`);
 
-// методы чисел 
-// метод parseInt - переводит число в другую систему исчесления  
+    }
+}
+writeYourGenres();
 
-const test = '12.2px';
-console.log(parseInt(test));
-
-// метод parseFloat возращает
-console.log(parseFloat(test));
